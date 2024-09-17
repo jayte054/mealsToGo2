@@ -7,49 +7,43 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import star from "../../../../assets/star";
 import open from "../../../../assets/open";
+import { Spacer } from "../../../components/spacerComponent";
+import { Texts } from "../../../components/typography/text.component";
+
+import { 
+    RestaurantCard, 
+    RestaurantCardCover, 
+    Info, 
+    Rating, 
+    StatInfo,
+    Status,
+} 
+from "./restaurant-info-card.styles";
 
 
-const RestaurantCard = styled(Card)`
-   background-color: ${props => props.theme.colors.ui.quaternary};
-   padding:${props => props.theme.space[1]};
-`
-const RestaurantCardCover = styled(Card.Cover)`
-   padding: ${props => props.theme.space[3]};
-   border-radius: ${props => props.theme.space[2]};
-`
+// const Title = styled.Text`
+//     font-family: ${props => props.theme.fonts.heading};
+//     font-size: ${props => props.theme.fontSizes.body};
+//     color: ${props => props.theme.colors.ui.primary};
+//     background-color: ${props => props.theme.colors.bg.primary};
+// `
+// const Address = styled.Text`
+//     font-family: ${props => props.theme.fonts.monospace};
+//     font-size: ${props => props.theme.fontSizes.caption}
+// `
 
-const Info = styled.View`
-    padding: ${props => props.theme.space[3]};
-`
-const Title = styled.Text`
-    font-family: ${props => props.theme.fonts.heading};
-    font-size: ${props => props.theme.fontSizes.body};
-    color: ${props => props.theme.colors.ui.primary};
-    background-color: ${props => props.theme.colors.bg.primary};
-`
-const Address = styled.Text`
-    font-family: ${props => props.theme.fonts.monospace};
-    font-size: ${props => props.theme.fontSizes.caption}
-`
-const Rating = styled.View`
-    padding-top: ${props => props.theme.space[1]};
-    padding-bottom: ${props => props.theme.space[1]};
-    flex-direction: row;
 
-`
-const StatInfo = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-`
+// const ClosedTag = styled.Text`
+//     color: ${props => props.theme.colors.text.error};
+//     font-size: ${props => props.theme.fontSizes.caption};
+//     padding-left: ${props => props.theme.space[3]}
 
-const ClosedTag = styled.Text`
-    color: ${props => props.theme.colors.text.error};
-    font-size: ${props => props.theme.fontSizes.caption};
-`
+// `
 
-const Status = styled.Text`
-    flex-direction: row;
-`
+
+// const Spacing = styled.View`
+//     padding-left: ${props => props.theme.space[3]}
+// `
 
 export const RestaurantInfoCard = ({restaurant = {}}) => {
 
@@ -58,7 +52,7 @@ export const RestaurantInfoCard = ({restaurant = {}}) => {
         icon = <MaterialIcons name="dinner-dining" size={16} color="black"  />,
         photos = ["https://cdn.vox-cdn.com/thumbor/5d_RtADj8ncnVqh-afV3mU-XQv0=/0x0:1600x1067/1200x900/filters:focal(672x406:928x662)/cdn.vox-cdn.com/uploads/chorus_image/image/57698831/51951042270_78ea1e8590_h.7.jpg"],
         address= "4 random street",
-        isOpen = true,
+        isOpen = false,
         rating = 4,
         isClosedTemporarily= true,
      } = restaurant;
@@ -68,32 +62,34 @@ export const RestaurantInfoCard = ({restaurant = {}}) => {
      const ClosedTemporarily = () => (
         <>
         {isClosedTemporarily && (
-            <ClosedTag variant="label">
+            <Texts variant="error">
                 CLOSED TEMPORARILY
-            </ClosedTag>
+            </Texts>
         ) }
         </>
      )
+
 
     return(
       <View>
         <RestaurantCard elevation={5}>
             <RestaurantCardCover key ={name} source={{uri: photos[0]}} />
                 <Info>
-                    <Title>{name}</Title>
+                    <Texts variant="label">{name}</Texts>
                     <StatInfo>
                         <Rating>
                         {ratingArray.map(() => (
                             <SvgXml xml={star} width={20} height={20}/>
                         ))}
                         </Rating>
-                        
                         <Status>
-                        {isOpen ? <SvgXml xml={open} width={20} height={20}/>  : <ClosedTemporarily />} 
-                        <Text>{icon}</Text>
+                        {isOpen ? <SvgXml xml={open} width={20} height={20}/>  : <ClosedTemporarily />}
+                        <Spacer position="left" size="large">
+                        <Texts >{icon}</Texts>
+                        </Spacer>
                         </Status>
                     </StatInfo>
-                    <Address>{address}</Address>
+                    <Texts variant="caption">{address}</Texts>
                 </Info>
         </RestaurantCard>
        </View>
